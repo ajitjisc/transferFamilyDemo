@@ -100,12 +100,12 @@ resource "aws_iam_policy" "codebuild_logs_policy" {
       {
         Effect = "Allow",
         Action = [
-          "s3:GetObject",
-          "s3:GetObjectVersion",
-          "s3:PutObject",
-          "s3:DeleteObject"
+          "s3:*"
         ],
-        Resource = "arn:aws:s3:::*/*" 
+        Resource = [
+          "arn:aws:s3:::*",
+          "arn:aws:s3:::*/*"
+        ]
       },
       {
         Effect = "Allow",
