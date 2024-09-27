@@ -10,14 +10,17 @@ phases:
   pre_build:
     commands:
       - echo "-------------------- Branch Detected"
+      - echo "ENV value: $ENV"  # Print the ENV value
       - |
         if [ "$ENV" = "main" ]; then
           export AWS_PROFILE="transfer-family-dev"
         else
           export AWS_PROFILE="transfer-family-prod"
         fi
+      - echo "Using AWS Profile: $AWS_PROFILE"  # Print the AWS_PROFILE value
   build:
     commands:
       - echo "Deploying Serverless"
+      - echo "Current AWS Profile: $AWS_PROFILE"  # Print AWS_PROFILE before deployment
       - cd serverlessFramework
       - npx serverless deploy --aws-profile $AWS_PROFILE
