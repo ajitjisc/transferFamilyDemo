@@ -12,7 +12,7 @@ phases:
       - echo "-------------------- Branch Detected"
       - echo "ENV value is $ENV"  # Modified to avoid colon issue
       - |
-        if [ "$ENV" = "main" ]; then
+        if [ "${ENV:-dev}" == "main" ]; then
           export AWS_PROFILE="transfer-family-dev"
         else
           export AWS_PROFILE="transfer-family-prod"
