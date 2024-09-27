@@ -10,17 +10,17 @@ phases:
   pre_build:
     commands:
       - echo "-------------------- Branch Detected"
-      - echo "ENV value is $ENV"  # Modified to avoid colon issue
+      - echo "ENV value is $ENV"  
       - |
-        if [ "${ENV:-dev}" == "main" ]; then
+        if [ "$ENV" = "main" ]; then
           export AWS_PROFILE="transfer-family-dev"
         else
           export AWS_PROFILE="transfer-family-prod"
         fi
-      - echo "Using AWS Profile is $AWS_PROFILE"  # Modified to avoid colon issue
+      - echo "Using AWS Profile is $AWS_PROFILE" 
   build:
     commands:
       - echo "Deploying Serverless"
-      - echo "Current AWS Profile is $AWS_PROFILE"  # Modified to avoid colon issue
+      - echo "Current AWS Profile is $AWS_PROFILE"
       - cd serverlessFramework
       - npx serverless deploy --aws-profile $AWS_PROFILE
