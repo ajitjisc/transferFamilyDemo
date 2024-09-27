@@ -5,18 +5,16 @@ phases:
     commands:
       - echo "Installing Serverless Framework"
       - npm install -g serverless
-
   pre_build:
     commands:
       - echo "Branch Detected: $ENV"
       - |
-        if [ "$ENV" == "main" ]; then 
+        if [ "$ENV" == "main" ]; then
           export AWS_PROFILE="transfer-family-dev"
-        else 
+        else
           export AWS_PROFILE="transfer-family-prod"
         fi
       - echo "Using AWS Profile: $AWS_PROFILE"
-
   build:
     commands:
       - echo "Deploying Serverless"
