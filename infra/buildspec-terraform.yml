@@ -1,0 +1,32 @@
+---
+version: 0.2
+env:
+  shell: bash
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo "Installing Terraform"
+      - curl -O
+        https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip
+      - unzip terraform_1.1.7_linux_amd64.zip
+      - mv terraform /usr/local/bin/
+      - terraform --version
+      - chmod +x infra/deploy.sh
+  pre_build:
+    commands:
+      - echo "-------------------- Branch Detected"
+      - |
+        if [ "${ENV:-dev}" == "main" ]; then
+          export DEPLOY_ENV="dev"
+        else
+          export DEPLOY_ENV="prod"
+        fi
+  build:
+    commands:
+      - echo "Running deployment for $DEPLOY_ENV environment"
+      - ./infra/deploy.sh $DEPLOY_ENV
+artifacts:
+  files:
+    - "**/*"

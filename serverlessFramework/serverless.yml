@@ -1,0 +1,9 @@
+service: serverlessFrameworkDemo
+
+provider:
+  name: aws
+  runtime: python3.12
+
+functions:
+  hello:
+    handler: inboundFileProcessor/temp_file_processor.handler

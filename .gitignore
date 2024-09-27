@@ -1,0 +1,8 @@
+/infra/.terraform.lock.hcl
+/infra/.terraform/
+/codepipeline/.terraform.lock.hcl
+/codepipeline/.terraform/
+/infra/terraform.tfstate
+/infra/terraform.tfstate.backup
+/codepipeline/terraform.tfstate
+/codepipeline/terraform.tfstate.backup
