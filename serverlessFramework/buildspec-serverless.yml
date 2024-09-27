@@ -9,7 +9,12 @@ phases:
   pre_build:
     commands:
       - echo "Branch Detected: $ENV"
-      - if [ "$ENV" == "main" ]; then export AWS_PROFILE="transfer-family-prod"; else export AWS_PROFILE="transfer-family-dev"; fi
+      - |
+        if [ "$ENV" == "main" ]; then 
+          export AWS_PROFILE="transfer-family-dev"
+        else 
+          export AWS_PROFILE="transfer-family-prod"
+        fi
       - echo "Using AWS Profile: $AWS_PROFILE"
 
   build:
