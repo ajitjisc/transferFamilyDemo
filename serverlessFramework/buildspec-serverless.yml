@@ -2,8 +2,6 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: 20
     commands:
       - echo "Installing Serverless Framework"
       - npm install -g serverless
@@ -11,7 +9,7 @@ phases:
     commands:
       - echo "-------------------- Branch Detected"
       - |
-        if [ "$ENV" == "main" ]; then
+        if [ "$ENV" = "main" ]; then
           export AWS_PROFILE="transfer-family-dev"
         else
           export AWS_PROFILE="transfer-family-prod"
@@ -19,4 +17,5 @@ phases:
   build:
     commands:
       - echo "Deploying Serverless"
+      - cd serverlessFramework  # Ensure you're in the correct directory
       - npx serverless deploy --aws-profile $AWS_PROFILE
