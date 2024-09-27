@@ -6,7 +6,7 @@ phases:
       nodejs: 20
     commands:
       - echo "Installing Serverless Framework"
-      - npm install -g serverless
+      - npm install -g serverless@3.39.0
   pre_build:
     commands:
       - echo "-------------------- Branch Detected"
