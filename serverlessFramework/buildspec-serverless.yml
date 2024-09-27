@@ -19,4 +19,5 @@ phases:
   build:
     commands:
       - echo "Deploying Serverless"
-      - npx serverless deploy --aws-profile $AWS_PROFILE --config serverlessFramework/serverless.yml
+      - cd serverlessFramework
+      - npx serverless deploy --aws-profile $AWS_PROFILE
