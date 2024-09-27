@@ -7,7 +7,7 @@ phases:
       - npm install -g serverless
   pre_build:
     commands:
-      - echo "Branch Detected: $ENV"
+      - echo "-------------------- Branch Detected"
       - |
         if [ "$ENV" == "main" ]; then
           export AWS_PROFILE="transfer-family-dev"
