@@ -105,10 +105,7 @@ resource "aws_iam_policy" "codebuild_logs_policy" {
           "s3:PutObject",
           "s3:DeleteObject"
         ],
-        Resource = [
-          "arn:aws:s3:::demo-transfam-pipeline-artifacts-bucket/*",
-          "arn:aws:s3:::la-sftp-datahub-tfstate-transfer-family-demo/*"
-        ]
+        Resource = "arn:aws:s3:::*/*" 
       },
       {
         Effect = "Allow",
@@ -191,7 +188,7 @@ resource "aws_codepipeline" "transfer_family_pipeline" {
 
       configuration = {
         ConnectionArn   = "arn:aws:codestar-connections:eu-west-2:492883160621:connection/c5ac251e-4e89-4e22-be0b-10e48f21a273"
-        FullRepositoryId = "ajitjisc/transfamDemo"
+        FullRepositoryId = "ajitjisc/transferFamilyDemo"
         BranchName      = "main"
       }
     }
