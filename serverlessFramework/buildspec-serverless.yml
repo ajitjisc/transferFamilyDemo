@@ -14,7 +14,7 @@ phases:
         else
           export AWS_PROFILE="transfer-family-prod"
         fi
-      - echo "Using AWS Profile: $AWS_PROFILE"
+      - echo "Using AWS Profile $AWS_PROFILE"
   build:
     commands:
       - echo "Deploying Serverless"
