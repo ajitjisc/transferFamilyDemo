@@ -13,14 +13,15 @@ phases:
       - echo "ENV value is $ENV"  
       - |
         if [ "$ENV" = "main" ]; then
-          export AWS_PROFILE="transfer-family-dev"
+          echo "Main branch detected, not using AWS_PROFILE."
+          unset AWS_PROFILE  # Ensuring AWS_PROFILE is not set
         else
           export AWS_PROFILE="transfer-family-prod"
+          echo "Using AWS Profile $AWS_PROFILE" 
         fi
-      - echo "Using AWS Profile is $AWS_PROFILE" 
   build:
     commands:
       - echo "Deploying Serverless"
       - echo "Current AWS Profile is $AWS_PROFILE"
       - cd serverlessFramework
-      - npx serverless deploy --aws-profile $AWS_PROFILE
+      - npx serverless deploy ${AWS_PROFILE:+--aws-profile $AWS_PROFILE}
