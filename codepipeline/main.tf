@@ -278,6 +278,51 @@ resource "aws_codepipeline" "transfer_family_pipeline" {
   }
 }
 
+# Trigger for CodePipeline
+resource "aws_codepipeline_webhook" "codepipeline_webhook" {
+  name            = "TransferFamilyPipelineWebhook"
+  target_action   = "Source"
+  target_pipeline = aws_codepipeline.transfer_family_pipeline.name
+
+  authentication = "GITHUB_HMAC"
+
+  authentication_configuration {
+    secret_token = var.github_webhook_secret
+  }
+
+  filter {
+    json_path    = "$.ref"
+    match_equals = "refs/heads/main"
+  }
+
+  tags = {
+    Environment = "Dev"
+  }
+}
+
+variable "github_webhook_secret" {
+  description = "The secret token for GitHub webhook authentication"
+  type        = string
+  sensitive   = true  # Optional, but recommended for secrets
+}
+
+
+# Add permissions for CodePipeline to invoke the webhook
+resource "aws_iam_role_policy" "webhook_invocation_policy" {
+  name = "WebhookInvocationPolicy"
+  role = aws_iam_role.codepipeline_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = "codepipeline:StartPipelineExecution",
+        Resource = aws_codepipeline.transfer_family_pipeline.arn
+      }
+    ]
+  })
+}
 
 # CodeBuild Project for Terraform
 resource "aws_codebuild_project" "terraform_project" {
