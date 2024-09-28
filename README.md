@@ -23,7 +23,7 @@ created for testing cicd pipeline
    - I set up the resources in `codepipeline/main.tf`, including the variable `github_webhook_secret`, among others.
    - I exported the secret with:
      ```bash
-     export TF_VAR_github_webhook_secret="c107e79d6929dab21b00f0684890712d6074446f017b83ac6076c95620af9a48"
+     export TF_VAR_github_webhook_secret="***********************"
      ```
    - I then ran `terraform apply`.
    - I obtained the Payload URL from the `TransferFamilyPipelineWebhook` we created in `codepipeline/main.tf` via the AWS CLI.
