@@ -81,7 +81,7 @@ resource "aws_iam_role" "codebuild_role" {
   })
 }
 
-# Update the CodeBuild IAM policy to include S3 and DynamoDB permissions
+# CodeBuild IAM policy to include S3, DynamoDB, and CloudFormation permissions
 resource "aws_iam_policy" "codebuild_logs_policy" {
   name = "CodeBuildLogsPolicy"
 
@@ -116,6 +116,34 @@ resource "aws_iam_policy" "codebuild_logs_policy" {
           "dynamodb:UpdateItem"
         ],
         Resource = "arn:aws:dynamodb:eu-west-2:492883160621:table/terraform_locks"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "cloudformation:*"
+        ],
+        Resource = "arn:aws:cloudformation:us-east-1:492883160621:stack/serverlessFrameworkDemo-dev/*" # Update this ARN to match your CloudFormation stack
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "cloudformation:ValidateTemplate"
+        ],
+        Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "iam:*" 
+        ],
+        Resource = "*" 
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "lambda:*"
+        ],
+        Resource = "*"
       }
     ]
   })
@@ -191,6 +219,9 @@ resource "aws_codepipeline" "transfer_family_pipeline" {
         FullRepositoryId = "ajitjisc/transferFamilyDemo"
         BranchName      = "main"
       }
+
+      # Define a namespace for the source stage variables
+      namespace = "SourceVariables"
     }
   }
 
@@ -209,6 +240,13 @@ resource "aws_codepipeline" "transfer_family_pipeline" {
 
       configuration = {
         ProjectName = aws_codebuild_project.terraform_project.name
+        EnvironmentVariables = jsonencode([
+          {
+            name  = "ENV"
+            value = "#{SourceVariables.BranchName}"
+            type  = "PLAINTEXT"
+          }
+        ])
       }
     }
   }
@@ -227,6 +265,13 @@ resource "aws_codepipeline" "transfer_family_pipeline" {
 
       configuration = {
         ProjectName = aws_codebuild_project.serverless_project.name
+        EnvironmentVariables = jsonencode([
+          {
+            name  = "ENV"
+            value = "#{SourceVariables.BranchName}"
+            type  = "PLAINTEXT"
+          }
+        ])
       }
     }
   }
@@ -273,15 +318,11 @@ resource "aws_codebuild_project" "serverless_project" {
     image        = "aws/codebuild/standard:5.0"
     type         = "LINUX_CONTAINER"
 
-    environment_variable {
-      name  = "AWS_PROFILE"
-      value = "transfer-family-dev"
-    }
   }
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "../serverlessFramework/buildspec-serverless.yml"  # Adjust path if necessary
+    buildspec = "serverlessFramework/buildspec-serverless.yml"
   }
 
   artifacts {
