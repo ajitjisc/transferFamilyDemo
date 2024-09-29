@@ -28,3 +28,56 @@ created for testing cicd pipeline
    - I then ran `terraform apply`.
    - I obtained the Payload URL from the `TransferFamilyPipelineWebhook` we created in `codepipeline/main.tf` via the AWS CLI.
    - Finally, I went to the GitHub repository settings and set up the webhook with all the previous information.
+
+
+6. **Set Up to Update the Source Stage BranchName**:
+
+   - Get the current pipeline configuration:
+
+      Use the following command to retrieve the current configuration of your `transfer_family_pipeline_prod` pipeline:
+
+      ```bash
+      aws codepipeline get-pipeline --name TransferFamilyPipelineProd > pipeline_prod.json
+      ```
+
+      This will save the pipeline configuration to a file called `pipeline_prod.json`.
+
+    - Edit the `pipeline_prod.json` file:
+
+      In the `pipeline_prod.json` file, find the `Source` stage and update the `BranchName` value under the `configuration` section:
+      ```json
+      {
+        "name": "Source",
+        "actions": [
+          {
+            "name": "Source",
+            "actionTypeId": {
+              "category": "Source",
+              "owner": "AWS",
+              "provider": "CodeStarSourceConnection",
+              "version": "1"
+            },
+            "runOrder": 1,
+            "configuration": {
+              "ConnectionArn": "arn:aws:codestar-connections:eu-west-2:492883160621:connection/c5ac251e-4e89-4e22-be0b-10e48f21a273",
+              "FullRepositoryId": "ajitjisc/transferFamilyDemo",
+              "BranchName": "main",  // Update this value
+              "DetectChanges": "true"
+            },
+            "outputArtifacts": [
+              {
+                "name": "source_output"
+              }
+            ]
+          }
+        ]
+      }
+      ```
+
+    - Update the pipeline with the modified configuration:
+
+      Once you've made the necessary changes, use the following command to update the pipeline:
+
+      ```bash
+      aws codepipeline update-pipeline --cli-input-json file://pipeline_prod.json
+      ```
