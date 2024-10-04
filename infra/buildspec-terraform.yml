@@ -18,10 +18,10 @@ phases:
     commands:
       - echo "-------------------- Branch Detected"
       - |
-        if [ "$ENV" = "main" ]; then
-          export DEPLOY_ENV="prod"
-        else
+        if [ "${ENV:-dev}" == "main" ]; then
           export DEPLOY_ENV="dev"
+        else
+          export DEPLOY_ENV="prod"
         fi
   build:
     commands:
