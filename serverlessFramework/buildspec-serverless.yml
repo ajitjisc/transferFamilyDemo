@@ -10,15 +10,14 @@ phases:
   pre_build:
     commands:
       - echo "-------------------- Branch Detected"
-      - echo "ENV value is $ENV"
+      - echo "ENV value is $ENV"  
       - |
         if [ "$ENV" = "main" ]; then
-          echo "Main branch detected, using AWS_PROFILE='transfer-family-prod'."
-          export AWS_PROFILE="transfer-family-prod"
-          echo "Using AWS Profile $AWS_PROFILE"
-        else
-          echo "Non-main branch detected, not using AWS_PROFILE."
+          echo "Main branch detected, not using AWS_PROFILE."
           unset AWS_PROFILE  # Ensuring AWS_PROFILE is not set
+        else
+          export AWS_PROFILE="transfer-family-prod"
+          echo "Using AWS Profile $AWS_PROFILE" 
         fi
   build:
     commands:
