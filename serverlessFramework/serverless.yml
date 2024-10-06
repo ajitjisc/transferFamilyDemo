@@ -2,6 +2,7 @@ service: serverlessFrameworkDemo
 
 provider:
   name: aws
+  region: eu-west-2
   runtime: python3.12
 
 functions:

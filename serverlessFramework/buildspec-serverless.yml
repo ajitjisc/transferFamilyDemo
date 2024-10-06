@@ -1,5 +1,3 @@
-version: 0.2
-
 phases:
   install:
     runtime-versions:
@@ -7,22 +5,24 @@ phases:
     commands:
       - echo "Installing Serverless Framework"
       - npm install -g serverless@3.39.0
+
   pre_build:
     commands:
       - echo "-------------------- Branch Detected"
       - echo "ENV value is $ENV"
       - |
         if [ "$ENV" = "main" ]; then
-          echo "Main branch detected, using AWS_PROFILE='transfer-family-prod'."
-          export AWS_PROFILE="transfer-family-prod"
-          echo "Using AWS Profile $AWS_PROFILE"
+          echo "Main branch detected, deploying to prod stage."
+          STAGE="prod"
         else
-          echo "Non-main branch detected, not using AWS_PROFILE."
-          unset AWS_PROFILE  # Ensuring AWS_PROFILE is not set
+          echo "Non-main branch detected, deploying to dev stage."
+          STAGE="dev"
         fi
+      - echo "Using stage: $STAGE"
+
   build:
     commands:
       - echo "Deploying Serverless"
-      - echo "Current AWS Profile is $AWS_PROFILE"
+      - echo "Current stage is $STAGE"
       - cd serverlessFramework
-      - npx serverless deploy ${AWS_PROFILE:+--aws-profile $AWS_PROFILE}
+      - npx serverless deploy --stage $STAGE
