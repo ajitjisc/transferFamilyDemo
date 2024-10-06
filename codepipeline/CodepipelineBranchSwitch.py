@@ -6,8 +6,8 @@ import sys
 codepipeline_client = boto3.client('codepipeline')
 
 # Replace with your values
-codepipeline_name = 'TransferFamilyPipelineProd'
-webhook_name = 'TransferFamilyPipelineProdWebhook'
+codepipeline_name = 'TransferFamilyPipeline'
+webhook_name = 'TransferFamilyPipelineWebhook'
 github_webhook_secret = 'e2b5f3a9f9be3b3c884266e39cf2c731cf3d1a7ee35e52708bb181398224c528'
 
 def update_codepipeline_branch(pipeline_name, branch):
