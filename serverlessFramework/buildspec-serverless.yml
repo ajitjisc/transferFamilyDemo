@@ -18,7 +18,7 @@ phases:
           echo "Non-main branch detected, deploying to dev stage."
           STAGE="dev"
         fi
-      - echo "Using stage: $STAGE"
+      - echo "Using stage $STAGE"
 
   build:
     commands:
