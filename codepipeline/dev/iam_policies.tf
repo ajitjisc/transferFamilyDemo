@@ -57,7 +57,10 @@ resource "aws_iam_policy" "codebuild_logs_policy" {
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ],
-        Resource = "arn:aws:logs:eu-west-2:492883160621:log-group:/aws/codebuild/*"
+        Resource = [
+          "arn:aws:logs:eu-west-2:492883160621:log-group:/aws/codebuild/*",
+          "arn:aws:logs:eu-west-2:492883160621:log-group:/aws/lambda/*"
+        ]
       },
       {
         Effect = "Allow",
@@ -84,7 +87,7 @@ resource "aws_iam_policy" "codebuild_logs_policy" {
         Action = [
           "cloudformation:*"
         ],
-        Resource = "arn:aws:cloudformation:us-east-1:492883160621:stack/serverlessFrameworkDemo-dev/*"
+        Resource = "arn:aws:cloudformation:eu-west-2:492883160621:stack/serverlessFrameworkDemo-dev/*"
       },
       {
         Effect = "Allow",
