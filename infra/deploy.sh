@@ -10,7 +10,7 @@ if [ "$ENV" == "prod" ]; then
   # Temporary changes for production deployment
   if [ -f backend.tf ]; then
     sed -i.bak -e 's/default = "transfer-family-dev"/default = "transfer-family-prod"/' \
-               -e 's/bucket = "la-sftp-datahub-tfstate-transfer-family-dev"/bucket = "la-sftp-datahub-tfstate"/' \
+               -e 's/bucket = "la-sftp-datahub-tfstate-transfer-family-demo"/bucket = "la-sftp-datahub-tfstate"/' \
                -e 's/dynamodb_table  = "terraform_locks"/dynamodb_table  = "dev-lock-table"/' backend.tf
   else
     echo "Error: backend.tf not found in the infra directory."
