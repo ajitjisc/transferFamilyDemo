@@ -32,7 +32,7 @@ resource "aws_s3_bucket" "home_bucket_6" {
 }
 
 
-# typo S3 Bucket
+# seventh S3 Bucket
 resource "aws_s3_bucket" "home_bucket_7" {
   bucket = "my-tf-test-bucket-7-${var.aws_profile}"
 }
