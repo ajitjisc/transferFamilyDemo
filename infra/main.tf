@@ -36,3 +36,9 @@ resource "aws_s3_bucket" "home_bucket_6" {
 resource "aws_s3_bucket" "home_bucket_7" {
   bucket = "my-tf-test-bucket-7-${var.aws_profile}"
 }
+
+
+# 8th S3 Bucket
+resource "aws_s3_bucket" "home_bucket_8" {
+  bucket = "my-tf-test-bucket-8-${var.aws_profile}"
+}
