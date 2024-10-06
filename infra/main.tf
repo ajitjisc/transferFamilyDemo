@@ -20,7 +20,19 @@ resource "aws_s3_bucket" "home_bucket_4" {
   bucket = "my-tf-test-bucket-4-${var.aws_profile}"
 }
 
-# 5th S3 Bucket
+# fifth S3 Bucket
 resource "aws_s3_bucket" "home_bucket_5" {
   bucket = "my-tf-test-bucket-5-${var.aws_profile}"
+}
+
+
+# sixth S3 Bucket
+resource "aws_s3_bucket" "home_bucket_6" {
+  bucket = "my-tf-test-bucket-6-${var.aws_profile}"
+}
+
+
+# 7th S3 Bucket
+resource "aws_s3_bucket" "home_bucket_7" {
+  bucket = "my-tf-test-bucket-7-${var.aws_profile}"
 }
