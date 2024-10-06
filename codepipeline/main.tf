@@ -378,7 +378,7 @@ resource "aws_codepipeline_webhook" "codepipeline_webhook_prod" {
 
   filter {
     json_path    = "$.ref"
-    match_equals = "refs/heads/feature/main"
+    match_equals = "refs/heads/main"
   }
 
   tags = {
