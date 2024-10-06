@@ -217,7 +217,7 @@ resource "aws_codepipeline" "transfer_family_pipeline" {
       configuration = {
         ConnectionArn   = "arn:aws:codestar-connections:eu-west-2:492883160621:connection/c5ac251e-4e89-4e22-be0b-10e48f21a273"
         FullRepositoryId = "ajitjisc/transferFamilyDemo"
-        BranchName      = "main"
+        BranchName      = " "
         DetectChanges    = "true"
       }
 
@@ -303,7 +303,7 @@ resource "aws_codepipeline" "transfer_family_pipeline_prod" {
       configuration = {
         ConnectionArn   = "arn:aws:codestar-connections:eu-west-2:492883160621:connection/c5ac251e-4e89-4e22-be0b-10e48f21a273"
         FullRepositoryId = "ajitjisc/transferFamilyDemo"
-        BranchName      = "feature/den-test"   
+        BranchName      = "main"   
         DetectChanges    = "true"
       }
 
@@ -378,7 +378,7 @@ resource "aws_codepipeline_webhook" "codepipeline_webhook_prod" {
 
   filter {
     json_path    = "$.ref"
-    match_equals = "refs/heads/feature/den-test"
+    match_equals = "refs/heads/feature/main"
   }
 
   tags = {
@@ -417,7 +417,7 @@ resource "aws_codepipeline_webhook" "codepipeline_webhook" {
 
   filter {
     json_path    = "$.ref"
-    match_equals = "refs/heads/main"
+    match_equals = " "
   }
 
   tags = {
