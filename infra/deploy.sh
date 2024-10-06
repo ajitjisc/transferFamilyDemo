@@ -20,8 +20,8 @@ if [ "$ENV" == "prod" ]; then
   # Apply Terraform commands for production
   echo "Deploying to production environment..."
   terraform init -reconfigure
-  terraform plan
-  terraform apply -auto-approve
+  terraform plan -var="aws_profile=transfer-family-prod"
+  terraform apply -var="aws_profile=transfer-family-prod" -auto-approve
 
   # Revert the backend.tf file to its original state
   mv backend.tf.bak backend.tf
